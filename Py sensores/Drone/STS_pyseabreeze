@@ -1,0 +1,21 @@
+import seabreeze
+seabreeze.use('pyseabreeze')
+import seabreeze.spectrometers as sb
+import numpy as np
+import matplotlib.pyplot as plt
+
+devices = sb.list_devices()
+spec = sb.Spectrometer(devices[0])
+#spec = sb.Spectrometer.from_serial_number("S09067")
+
+spec.integration_time_micros(100000)
+
+wavelenghts = np.array(spec.wavelengths())
+
+intensities = np.array(spec.intensities())
+
+plt.title("STS-NIR Spectrum") 
+plt.xlabel("Wavelenghts [um]") 
+plt.ylabel("Intensities") 
+plt.plot(wavelenghts,intensities) 
+plt.show()

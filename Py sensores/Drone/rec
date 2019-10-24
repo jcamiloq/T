@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+          
+      
+import time
+import serial
+import numpy as np
+
+      
+ser = serial.Serial(
+              
+    port='/dev/ttyUSB0',
+    baudrate = 57600,
+    parity=serial.PARITY_NONE,
+    stopbits=serial.STOPBITS_ONE,
+    bytesize=serial.EIGHTBITS,
+    timeout=1
+)
+counter=0
+saveFile= open('../Data/spec.txt', 'w')
+saveFile.write('')
+saveFile.close()
+arr=np.array([6, 2, 3, 4, 5])
+print(arr)
+
+while 1:
+    x=str(ser.readline())
+    #print (x)
+    if x == "b'c'":
+        print('recibido')
+        appendFile = open('../Data/spec.txt', 'a')
+        appendFile.write('\nEspectro número '+ str(counter))
+        appendFile.write('\n')
+        appendFile.close()
+        for i in arr:
+            appendFile = open('../Data/spec.txt', 'a')
+            appendFile.write(str(i)+ ' ')
+            #appendFile.write('\n')
+            appendFile.close()
+        counter=counter+1
+        arr=arr*2
+        
